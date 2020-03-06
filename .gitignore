@@ -1,1 +1,3 @@
 /target
+/.cache
+/workflow/fast-user-switching
