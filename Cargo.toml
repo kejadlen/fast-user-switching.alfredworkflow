@@ -1,5 +1,5 @@
 [package]
-name = "switch-user"
+name = "fast-user-switching"
 version = "0.1.0"
 authors = ["Alpha Chen <alpha@kejadlen.dev>"]
 edition = "2018"
@@ -9,5 +9,3 @@ edition = "2018"
 [dependencies]
 alphred = "0.1"
 anyhow = "1.0"
-serde = "1.0"
-serde_json = "1.0"

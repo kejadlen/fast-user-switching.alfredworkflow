@@ -4,9 +4,8 @@ use std::path::PathBuf;
 use std::process::Command;
 use std::result;
 
-use alphred::{workflow_cache, Item};
+use alphred::{Item, Workflow};
 use anyhow::{anyhow, Result};
-use serde_json::json;
 
 // Ported from https://github.com/aiyodk/Alfred-Extensions
 
@@ -29,7 +28,7 @@ fn main() -> Result<()> {
         let item = Item::new(user).arg(user).icon(icon_path.as_path());
         items.push(item);
     }
-    println!("{}", json!({ "items": items }));
+    println!("{}", Workflow::new(&items));
 
     Ok(())
 }
@@ -50,7 +49,7 @@ fn icon(username: &str) -> Result<PathBuf> {
     let hex: Vec<_> = photo
         .lines()
         .last()
-        .ok_or_else(|| anyhow!(""))?
+        .ok_or_else(|| anyhow!("couldn't read user {} photo", username))?
         .replace(" ", "")
         .chars()
         .collect();
@@ -60,8 +59,7 @@ fn icon(username: &str) -> Result<PathBuf> {
         .map(|w| u8::from_str_radix(&format!("{}{}", w[0], w[1]), 16))
         .collect::<result::Result<_, _>>()?;
 
-    // create dir if it doesn't exist
-    let mut path = workflow_cache()?;
+    let mut path = Workflow::cache()?;
     path.push(username);
     path.set_extension("jpg");
 

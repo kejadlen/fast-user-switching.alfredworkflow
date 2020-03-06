@@ -2,13 +2,14 @@
 # It is not intended for manual editing.
 [[package]]
 name = "alphred"
-version = "0.1.1"
+version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "49e556bc38c526d9d5486fc0f004f8d218c11ad49b51dd3e8882b3bbef9e170d"
+checksum = "6ded48baa5ffd7d4c6fb99f6405efbb3e592e57d21a4cf3b66f8afb0167d44f9"
 dependencies = [
  "anyhow",
  "serde",
  "serde_derive",
+ "serde_json",
 ]
 
 [[package]]
@@ -16,6 +17,14 @@ name = "anyhow"
 version = "1.0.26"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7825f6833612eb2414095684fcf6c635becf3ce97fe48cf6421321e93bfbd53c"
+
+[[package]]
+name = "fast-user-switching"
+version = "0.1.0"
+dependencies = [
+ "alphred",
+ "anyhow",
+]
 
 [[package]]
 name = "itoa"
@@ -34,9 +43,9 @@ dependencies = [
 
 [[package]]
 name = "quote"
-version = "1.0.2"
+version = "1.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "053a8c8bcc71fcce321828dc897a98ab9760bef03a4fc36693c231e5b3216cfe"
+checksum = "2bdc6c187c65bca4260c9011c9e3132efe4909da44726bad24cf7572ae338d7f"
 dependencies = [
  "proc-macro2",
 ]
@@ -52,6 +61,9 @@ name = "serde"
 version = "1.0.104"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "414115f25f818d7dfccec8ee535d76949ae78584fc4f79a6f45a904bf8ab4449"
+dependencies = [
+ "serde_derive",
+]
 
 [[package]]
 name = "serde_derive"
@@ -73,16 +85,6 @@ dependencies = [
  "itoa",
  "ryu",
  "serde",
-]
-
-[[package]]
-name = "switch-user"
-version = "0.1.0"
-dependencies = [
- "alphred",
- "anyhow",
- "serde",
- "serde_json",
 ]
 
 [[package]]
