@@ -40,6 +40,22 @@ fn run(program: &str, args: &[&str]) -> Result<String> {
 }
 
 fn icon(username: &str) -> Result<PathBuf> {
+    let mut path = Workflow::cache()?;
+    path.push(username);
+    path.set_extension("jpg");
+
+    if path.exists() {
+        return Ok(path);
+    }
+
+    let binary = read_icon(username)?;
+    let mut buffer = File::create(&path)?;
+    buffer.write_all(&binary)?;
+
+    Ok(path)
+}
+
+fn read_icon(username: &str) -> Result<Vec<u8>> {
     let photo = run(
         "dscl",
         &[".", "-read", &format!("/Users/{}/", username), "JPEGPhoto"],
@@ -59,12 +75,5 @@ fn icon(username: &str) -> Result<PathBuf> {
         .map(|w| u8::from_str_radix(&format!("{}{}", w[0], w[1]), 16))
         .collect::<result::Result<_, _>>()?;
 
-    let mut path = Workflow::cache()?;
-    path.push(username);
-    path.set_extension("jpg");
-
-    let mut buffer = File::create(&path)?;
-    buffer.write_all(&binary)?;
-
-    Ok(path)
+    Ok(binary)
 }
